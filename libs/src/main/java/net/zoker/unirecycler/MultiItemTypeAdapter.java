@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import net.zoker.unirecycler.base.ItemViewDelegate;
 import net.zoker.unirecycler.base.ItemViewDelegateManager;
@@ -67,7 +68,8 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<SimplerViewHol
             public void onClick(View v) {
                 if (mOnItemClickListener != null) {
                     int position = viewHolder.getAdapterPosition();
-                    mOnItemClickListener.onItemClick(v, viewHolder , position);
+                    Toast.makeText(parent.getContext(),"点击点击点击",Toast.LENGTH_SHORT).show();
+                    mOnItemClickListener.onItemClick(v, viewHolder , position ,mItemViewDelegateManager.getItemViewDelegate(getItemViewType(position)));
                 }
             }
         });
@@ -77,7 +79,7 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<SimplerViewHol
             public boolean onLongClick(View v) {
                 if (mOnItemClickListener != null) {
                     int position = viewHolder.getAdapterPosition();
-                    return mOnItemClickListener.onItemLongClick(v, viewHolder, position);
+                    return mOnItemClickListener.onItemLongClick(v, viewHolder, position,mItemViewDelegateManager.getItemViewDelegate(getItemViewType(position)));
                 }
                 return false;
             }
@@ -121,9 +123,9 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<SimplerViewHol
     }
 
     public interface OnItemClickListener {
-        void onItemClick(View view, RecyclerView.ViewHolder holder, int position);
+        void onItemClick(View view, RecyclerView.ViewHolder holder, int position ,ItemViewDelegate itemViewDelegate);
 
-        boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position);
+        boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position ,ItemViewDelegate ItemViewDelegate);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
