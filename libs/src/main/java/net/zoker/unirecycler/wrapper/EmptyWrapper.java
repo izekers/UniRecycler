@@ -11,11 +11,10 @@ import net.zoker.unirecycler.utils.WrapperUtils;
 
 
 /**
- *
+ * 空数据显示
  * Created by zhy on 16/6/23.
  */
-public class EmptyWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder>
-{
+public class EmptyWrapper extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final int ITEM_TYPE_EMPTY = Integer.MAX_VALUE - 1;
 
     private RecyclerView.Adapter mInnerAdapter;
@@ -34,15 +33,13 @@ public class EmptyWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-    {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         if (isEmpty())
         {
             if (mEmptyView != null)
             {
                 return SimplerViewHolder.createViewHolder(parent.getContext(), mEmptyView);
-            } else
-            {
+            } else{
                 return SimplerViewHolder.createViewHolder(parent.getContext(), parent, mEmptyLayoutId);
             }
         }
@@ -61,8 +58,7 @@ public class EmptyWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 {
                     return gridLayoutManager.getSpanCount();
                 }
-                if (oldLookup != null)
-                {
+                if (oldLookup != null){
                     return oldLookup.getSpanSize(position);
                 }
                 return 1;
@@ -84,10 +80,8 @@ public class EmptyWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
     @Override
-    public int getItemViewType(int position)
-    {
-        if (isEmpty())
-        {
+    public int getItemViewType(int position){
+        if (isEmpty()){
             return ITEM_TYPE_EMPTY;
         }
         return mInnerAdapter.getItemViewType(position);
@@ -109,8 +103,6 @@ public class EmptyWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (isEmpty()) return 1;
         return mInnerAdapter.getItemCount();
     }
-
-
 
     public void setEmptyView(View emptyView)
     {

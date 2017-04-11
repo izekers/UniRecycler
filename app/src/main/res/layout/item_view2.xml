@@ -3,10 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+
     <TextView
+        android:id="@+id/tem2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:background="#999"
-        android:text="head_footer_view"/>
+        android:background="#f2f2f2"
+        android:text="itemView"/>
 </LinearLayout>
