@@ -11,9 +11,10 @@ import net.zoker.unirecycler.utils.WrapperUtils;
 
 
 /**
+ * 底部加载更多  听说会有bug，这个得考虑了再用
  * Created by zhy on 16/6/23.
  */
-public class LoadMoreWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+public class LoadMoreWrapper extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
     public static final int ITEM_TYPE_LOAD_MORE = Integer.MAX_VALUE - 2;
 
@@ -26,8 +27,7 @@ public class LoadMoreWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
         mInnerAdapter = adapter;
     }
 
-    private boolean hasLoadMore()
-    {
+    private boolean hasLoadMore(){
         return mLoadMoreView != null || mLoadMoreLayoutId != 0;
     }
 

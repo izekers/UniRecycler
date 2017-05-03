@@ -68,6 +68,7 @@ public class HeaderAndFooterWrapper extends RecyclerView.Adapter<RecyclerView.Vi
         return getHeadersCount() + getFootersCount() + getRealItemCount();
     }
 
+    //GridLayoutManager处理
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         WrapperUtils.onAttachedToRecyclerView(mInnerAdapter, recyclerView, new WrapperUtils.SpanSizeCallback() {
@@ -86,14 +87,15 @@ public class HeaderAndFooterWrapper extends RecyclerView.Adapter<RecyclerView.Vi
         });
     }
 
-//    @Override
-//    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
-//        mInnerAdapter.onViewAttachedToWindow(holder);
-//        int position = holder.getLayoutPosition();
-//        if (isHeaderViewPos(position) || isFooterViewPos(position)) {
-//            WrapperUtils.setFullSpan(holder);
-//        }
-//    }
+    //瀑布流处理
+    @Override
+    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+        mInnerAdapter.onViewAttachedToWindow(holder);
+        int position = holder.getLayoutPosition();
+        if (isHeaderViewPos(position) || isFooterViewPos(position)) {
+            WrapperUtils.setFullSpan(holder);
+        }
+    }
 
     private boolean isHeaderViewPos(int position) {
         return position < getHeadersCount();

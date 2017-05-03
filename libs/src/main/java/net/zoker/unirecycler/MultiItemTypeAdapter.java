@@ -68,7 +68,6 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<SimplerViewHol
             public void onClick(View v) {
                 if (mOnItemClickListener != null) {
                     int position = viewHolder.getAdapterPosition();
-                    Toast.makeText(parent.getContext(),"点击点击点击",Toast.LENGTH_SHORT).show();
                     mOnItemClickListener.onItemClick(v, viewHolder , position ,mItemViewDelegateManager.getItemViewDelegate(getItemViewType(position)));
                 }
             }

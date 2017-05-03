@@ -37,8 +37,7 @@ public class WrapperUtils
         }
     }
 
-    public static void setFullSpan(RecyclerView.ViewHolder holder)
-    {
+    public static void setFullSpan(RecyclerView.ViewHolder holder){
         ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
 
         if (lp != null

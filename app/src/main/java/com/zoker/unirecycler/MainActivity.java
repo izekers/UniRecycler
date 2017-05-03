@@ -1,5 +1,6 @@
 package com.zoker.unirecycler;
 
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,37 +18,43 @@ import net.zoker.unirecycler.base.SimplerViewHolder;
 import net.zoker.unirecycler.wrapper.EmptyWrapper;
 import net.zoker.unirecycler.wrapper.HeaderAndFooterWrapper;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recycler_view;
     HeaderAndFooterWrapper wrapper;
     MultiItemTypeAdapter adater;
+    CommonAdapter commonAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //zhy方案
-        mdatas.add(new Object());
-        mdatas.add(new Object());
-        mdatas.add(new Object());
-        mdatas.add(new Object());
+        final IntentModel[] mdata=new IntentModel[]{
+                new IntentModel("zhy:单适配器",new Intent(this,ZhyActivity.class)),
+                new IntentModel("zhy:多适配器",new Intent(this,zhyMulActivity.class)),
+                new IntentModel("zhy:空数据适配器",new Intent(this,EmptyActivity.class)),
+                new IntentModel("zhy:Header_footer数据适配器",new Intent(this,HeaderFooterActivity.class)),
+                new IntentModel("zhy:加载更多适配器",new Intent(this,LoadMoreActivity.class)),
+                new IntentModel("MultiType:最简单的使用方式",new Intent(this,MultiType_singleItemActivity.class)),
+                new IntentModel("MultiType:全局注册item的使用方式",new Intent(this,MultiType_globalItemActivity.class)),
+                new IntentModel("MultiType:二级item的使用方式",new Intent(this,MultiType_secondaryItemActivity.class)),
+                new IntentModel("测试照相库",new Intent(this,PhotoActivity.class)),
+        };
+
         recycler_view=(RecyclerView) findViewById(R.id.recycler_view);
         recycler_view.setLayoutManager(new LinearLayoutManager(this));
-
-        //万能适配器，多类型
-        adater=new MultiItemTypeAdapter(this,mdatas);
-        adater.addItemViewDelegate(new Item1Delete());
-        adater.addItemViewDelegate(new Item2Delete());
-        adater.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+        commonAdapter=new CommonAdapter<IntentModel>(this,R.layout.main_item,Arrays.asList(mdata)) {
+            @Override
+            protected void convert(SimplerViewHolder holder, IntentModel intentModel, int position) {
+                holder.setText(R.id.item_view,intentModel.getName());
+            }
+        };
+        commonAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position, ItemViewDelegate itemViewDelegate) {
-
-                if (itemViewDelegate instanceof Item1Delete){
-                    Toast.makeText(MainActivity.this,"点击了第一种按钮",Toast.LENGTH_SHORT).show();
-                }else if (itemViewDelegate instanceof Item2Delete){
-                    Toast.makeText(MainActivity.this,"点击了第二种按钮",Toast.LENGTH_SHORT).show();
-                }
+                startActivity(mdata[position].getIntent());
             }
 
             @Override
@@ -55,85 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-        recycler_view.setAdapter(adater);
 
-
-        //万能适配器，单类型
-        final CommonAdapter<Object> commonAdapter=new CommonAdapter<Object>(this,R.layout.item_view,mdatas) {
-            @Override
-            protected void convert(SimplerViewHolder holder, Object o, int position) {
-                holder.setText(R.id.item_text_1,"这是单按钮");
-            }
-        };
         recycler_view.setAdapter(commonAdapter);
-
-        //空数据适配器
-        final EmptyWrapper emptyWrapper=new EmptyWrapper(commonAdapter);
-        emptyWrapper.setEmptyView(R.layout.empty_view);
-        recycler_view.setAdapter(emptyWrapper);
-
-        //添加头部适配
-        wrapper=new HeaderAndFooterWrapper(emptyWrapper);
-        wrapper.addHeaderView(headerOrFooterView());
-        wrapper.addHeaderView(headerOrFooterView());
-        wrapper.addFootView(headerOrFooterView());
-        wrapper.addFootView(headerOrFooterView());
-        recycler_view.setAdapter(wrapper);
-
-        findViewById(R.id.grid).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                mdatas.add(new Object());
-//                mdatas.add(new Object());
-//                adater.setDatas(mdatas);
-                commonAdapter.setDatas(null);
-                wrapper.notifyDataSetChanged();
-            }
-        });
-    }
-
-    public View headerOrFooterView(){
-        return LayoutInflater.from(this).inflate(R.layout.header_footer_view,null);
-    }
-    private List<Object> mdatas=new ArrayList<>();
-
-    class Item1Delete implements ItemViewDelegate<Object> {
-
-        @Override
-        public int getItemViewLayoutId() {
-            return R.layout.item_view;
-        }
-
-        @Override
-        public boolean isForViewType(Object item, int position) {
-            int type=position%2==0?1:2;
-            Log.e("MainActivity","position="+position+"type="+type);
-            return position%2==0;
-        }
-
-        @Override
-        public void convert(SimplerViewHolder holder, Object o, int position) {
-            holder.setText(R.id.item_text_1,"这是第一种item");
-        }
-    }
-
-    class Item2Delete implements ItemViewDelegate<Object>{
-
-        @Override
-        public int getItemViewLayoutId() {
-            return R.layout.item_view2;
-        }
-
-        @Override
-        public boolean isForViewType(Object item, int position) {
-            int type=position%2==0?1:2;
-            Log.e("MainActivity","position="+position+"type="+type);
-            return position%2!=0;
-        }
-
-        @Override
-        public void convert(SimplerViewHolder holder, Object o, int position) {
-            holder.setText(R.id.tem2,"这是第二种item");
-        }
     }
 }

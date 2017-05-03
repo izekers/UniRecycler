@@ -16,3 +16,4 @@
   引用了zhy的CommonAdapter,万能适配器，很好用，简化了很多代码。但感觉使用上有点限制，带测试一方看看如何修改适合自己使用
 
   引用了zhy的EmptyWrapper，事实上该适配器实现原理与HeaderAndrFooterWrapper没多大区别，就是判断列表为空的时候，添加一个专门的item用于显示页面，自然存在的问题与上面也就一致
+  看到一个很好的库的写法drakeet的MultiType,我将把他引进来，写好实例，然后再做源码分析

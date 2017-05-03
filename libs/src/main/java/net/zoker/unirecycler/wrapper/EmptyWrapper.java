@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import net.zoker.unirecycler.base.SimplerViewHolder;
 import net.zoker.unirecycler.utils.WrapperUtils;
 
-
 /**
  * 空数据显示
  * Created by zhy on 16/6/23.
