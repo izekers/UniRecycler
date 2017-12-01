@@ -15,6 +15,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SingleListFragmentActivity"/>
+        <activity android:name=".UniSingleListFragmentActivity" />
+        <activity android:name=".MultiTypeListFragmentActivity" />
+        <activity android:name=".MultiTypeListFragment2Activity" />
+        <activity android:name=".MultiTypeListFragment_1Activity" />
     </application>
 
 </manifest>
