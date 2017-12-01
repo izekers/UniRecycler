@@ -7,3 +7,5 @@
 1. 添加FooterView和HeaderView;
 2. 上下拉刷新;
 3. 待续。。
+
+此项目将以 https://github.com/drakeet/MultiType.git 为基础开发
